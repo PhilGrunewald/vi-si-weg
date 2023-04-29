@@ -11,15 +11,21 @@ Usage
 Tags come in three states:
 
 1. *unnamed-tag*
+
   `[<`tag content`>]`
+
   `◁`tag content`▷`       (with Conceal)
 
 2. *named-tag*
+
   `[name<`tag content`>]`
+
   `◀`tag content`▷`       (with Conceal)
 
 3. *closed-tag*
+
   `[name<]`
+
   `▼`                   (with Conceal)
 
 An |unnamed-tag| is assigned a `name` when closed with <S-CR>. The `name` consists of the |g:TagLeader| and the lowest unused sequential number. The `name` remains inside the |closed-tag|.
