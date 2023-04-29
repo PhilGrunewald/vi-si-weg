@@ -39,14 +39,18 @@ Changing tag names                                    *vi-si-weg-tags*
 *g:TagLeader* is set to `.` by default, such that hidden files
 `.1`,`.2`,`.3`,... are created. Alternative presets are:
 
-:*TagNumbers* stores tags as sequential numbers (not hidden)
-:*TagFolder* Tags are stored in subfolder `tag` as sequential numbers.
-:*TagHidden* (default) Tags are stored as hidden files with sequential numbering
+COMMANDS
+  :*TagNumbers* stores tags as sequential numbers (not hidden)
+  :*TagFolder* Tags are stored in subfolder `tag` as sequential numbers.
+  :*TagHidden* (default) Tags are stored as hidden files with sequential numbering
 
 The variable can be customised with
 
   `let g:TagLeader = "myTag"`
 
+HELP
+
+  :*TagHelp* shows this file
 
 ====================================================================
 Revision history                                 *vi-si-weg-revisions*
