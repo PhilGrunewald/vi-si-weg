@@ -1,0 +1,1 @@
+/Users/pg/.config/nvim/my-plugs/vi-si-weg/doc/vi-si-weg.txt
