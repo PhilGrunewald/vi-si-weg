@@ -5,7 +5,7 @@ Vim plugin to toggle text in and out of files into a tag
 Usage
 -----
 
-*<S-CR>* or *<<*  toggle the tag under cursor open and shut.
+*\<S-CR\>* or *<<*  toggle the tag under cursor open and shut.
 
 |unnamed-tag| become |closed-tag| with a name.
 
