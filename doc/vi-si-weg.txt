@@ -1,19 +1,15 @@
-*vi-si-weg.txt* <S-CR> toggles text on/off into tags
+*vi-si-weg.txt* toggles text on/off into tags
 
 ====================================================================
 CONTENTS                                          *vi-si-weg-contents*
 
-    1. Usage ..................... |vi-si-weg-use|
-    2. Changing tag names ........ |vi-si-weg-tags|
-    3. Revision history .......... |vi-si-weg-revisions|
+    Tags .................. |vi-si-weg-tags|
+    Commands .............. |vi-si-weg-commands|
+    Tag names ............. |vi-si-weg-tag-names|
+    Revision history ...... |vi-si-weg-revisions|
 
 ====================================================================
-Using vi-si-weg tags                                   *vi-si-weg-use*
-
-*<S-CR>*   Toggles the tag under cursor (normal mode). |unnamed-tag| and
-|named-tag| become |closed-tag|. |closed-tag| toggles with |named-tag|.
-
-Tags come in three states:
+Tags                                                  *vi-si-weg-tags*
 
 1. *unnamed-tag*
   `[<`tag content`>]`
@@ -27,26 +23,58 @@ Tags come in three states:
   `[name<]`
   `▼`                   (with Conceal)
 
-An |unnamed-tag| is assigned a `name` when closed with <S-CR>. The `name` consists of the |g:TagLeader| and the lowest unused sequential number. The `name` remains inside the |closed-tag|.
+An |unnamed-tag| is assigned a `name` when closed with |TagToggle|. The `name` consists of the |g:TagLeader| and the lowest unused sequential number. The `name` remains inside the |closed-tag|.
 
-A |named-tag| overwrites the `name`-file in the current directory when closed with <S-CR>. If such a file does not exist, it is created. Name containing a `/` store inside that subfolder.
+A |named-tag| overwrites the `name`-file in the current directory when closed with |TagToggle|. If such a file does not exist, it is created. Tag names containing a `/` are stored inside the named subfolder.
 
-A |closed-tag| gets the content from the `name`-file and inserts it into the |named-tag| when opened with <S-CR>
+A |closed-tag| reads its content from the `name`-file and inserts it into the |named-tag| when opened with |TagToggle|.
 
 ====================================================================
-Changing tag names                                    *vi-si-weg-tags*
+Commands                                          *vi-si-weg-commands*
 
+:*TagToggle*  Toggles the tag under cursor.
+            |unnamed-tag| and |named-tag| become |closed-tag|.
+            |closed-tag| toggles to/from |named-tag|.
+
+        *<<*  mapped to |TagToggle| by default
+    *<S-CR>*  mapped to |TagToggle| by default
+
+:*TagConceal* Switches on concealed tags. Tag `name` is hidden in |named-tag|. For `.md` files conceal is enabled by default.
+
+:*TagHelp*    Opens this help file
+
+====================================================================
+Tag names                                        *vi-si-weg-tag-names*
+
+Tags consist of three parts:
+|g:TagLeader| + sequential number + |g:TagExtension|
+
+e.g.: `.`1`.md`
+
+TAG LEADER
 *g:TagLeader* is set to `.` by default, such that hidden files
-`.1`,`.2`,`.3`,... are created. Alternative presets are:
+`.1`,`.2`,`.3`,... are created locally when closing an |unnamed-tag|.
 
-COMMANDS
+  :*TagHidden*  (default) Tags are stored as hidden files with sequential numbering
+  :*TagFile*    name tags after the current file
   :*TagNumbers* stores tags as sequential numbers (not hidden)
-  :*TagFolder* Tags are stored in subfolder `tag` as sequential numbers.
-  :*TagHidden* (default) Tags are stored as hidden files with sequential numbering
+  :*TagFolder*  store tags in subfolder `tags/` as sequential numbers
 
-The variable can be customised with
+The name can be customised with
 
   `let g:TagLeader = "myTag"`
+
+or manually written as a |named-tag|:
+
+  `[myFolder/myTag.txt<`my content`>]`
+
+TAG EXTENSIONS
+  *g:TagExtension*   matches the current file by default
+  :*TagNoExtension*  no file extension for tags (bless brevity)
+
+The extension can be customised with
+
+  `let g:TagExtension = ".csv"`
 
 HELP
 
@@ -57,6 +85,8 @@ Revision history                                 *vi-si-weg-revisions*
 
 | Date      | Ver.  | Author         | Updates         |
 | ----      | ----- | ------         | --------        |
+| 30 Apr 23 | v1.2  | Phil Grunewald | g:TagExtension  |
+| 30 Apr 23 | v1.1  | Phil Grunewald | TagConceal      |
 | 29 Apr 23 | v1.0  | Phil Grunewald | Sub-folders     |
 | 28 Apr 23 | v0.2  | Phil Grunewald | g:TagLabel      |
 | 27 Apr 23 | v0.1  | Phil Grunewald | Conceal         |

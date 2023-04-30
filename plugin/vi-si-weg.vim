@@ -1,6 +1,6 @@
 " vi-si-weg
 
-fu! Visiweg()
+fu! TagToggle()
   silent normal "tyi[
   let tag = @t
   if tag[0] == '<' && tag[-1:-1] == '>'
@@ -13,10 +13,11 @@ fu! Visiweg()
     while filereadable(g:TagLeader.i)
       let i+=1
     endwhile
-    let fname = g:TagLeader.i
+    let fname = g:TagLeader.i.g:TagExtension
     let tagLines = split(tag[1:-2],"\n")
     call writefile(tagLines,fname)
     let fname = substitute(fname,"/",'\\\\/','g')
+    let tag = join(split(tag,'\n'),'\\n')
     execute expand("s/".tag."/".fname."<")
   elseif tag[-1:-1] == '>'
     " existing tag to be closed
@@ -47,14 +48,29 @@ fu! Visiweg()
   normal f[
 endf
 
-nmap <S-Enter> :call Visiweg()<CR>
+" Globals
 
-" Changing tag names
-
+" hidden tags
 let g:TagLeader = "."
-command! TagHidden let g:TagLeader = "."
-command! TagFolder let g:TagLeader = "tags/"
-command! TagNumbers let g:TagLeader = ""
+" match extension of current file
+execute "let g:TagExtension = '.".expand("%:e")."'"
 
-" Help
+" Commands
+
+command! TagToggle   call TagToggle()
+command! TagHidden   let g:TagLeader = "."
+command! TagFolder   let g:TagLeader = "tags/"
+command! TagNumbers  let g:TagLeader = ""
+command! TagFile     execute "let g:TagLeader = '".expand("%:t:r")."'"
+
+
+command! TagNoExtension let g:TagExtension = ""
+execute "command! TagConceal so".expand("<sfile>:p:h")."/../syntax/mkd.vim"
 command! TagHelp :h vi-si-weg
+
+
+" Mappings
+
+nmap <S-Enter> :TagToggle<CR>
+nmap <<        :TagToggle<CR>
+
