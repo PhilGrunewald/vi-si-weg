@@ -10,7 +10,7 @@ fu! TagToggle()
         silent execute expand("!mkdir ".split(g:TagLeader,'/')[0])
     endif
     let i = 1
-    while filereadable(g:TagLeader.i)
+    while filereadable(g:TagLeader.i.g:TagExtension)
       let i+=1
     endwhile
     let fname = g:TagLeader.i.g:TagExtension
@@ -47,6 +47,7 @@ fu! TagToggle()
   endif
   normal f[
 endf
+
 
 " Globals
 
